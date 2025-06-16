@@ -1,5 +1,5 @@
 {
-  "name": "@connect-ecosystem-api/api-gateway",
+  "name": "@connect-ecosystem-api/user-service",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "targets": {
     "build": {
@@ -13,15 +13,15 @@
         "build"
       ],
       "options": {
-        "buildTarget": "@connect-ecosystem-api/api-gateway:build",
+        "buildTarget": "@connect-ecosystem-api/user-service:build",
         "runBuildTargetDependencies": false
       },
       "configurations": {
         "development": {
-          "buildTarget": "@connect-ecosystem-api/api-gateway:build:development"
+          "buildTarget": "@connect-ecosystem-api/user-service:build:development"
         },
         "production": {
-          "buildTarget": "@connect-ecosystem-api/api-gateway:build:production"
+          "buildTarget": "@connect-ecosystem-api/user-service:build:production"
         }
       }
     }
