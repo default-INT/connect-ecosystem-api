@@ -1,12 +1,12 @@
 {
+  "name": "@connect-ecosystem-api/api-gateway",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "targets": {
     "serve": {
       "continuous": true,
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
-      "dependsOn": [
-        "build"
-      ],
+      "dependsOn": ["build"],
       "options": {
         "buildTarget": "@connect-ecosystem-api/api-gateway:build",
         "runBuildTargetDependencies": false

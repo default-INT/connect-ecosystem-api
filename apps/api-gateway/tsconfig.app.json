@@ -1,5 +1,5 @@
 {
-  "extends": "../tsconfig.base.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist",
     "types": ["node", "express"],
@@ -10,7 +10,7 @@
   "exclude": ["eslint.config.js", "eslint.config.cjs", "eslint.config.mjs"],
   "references": [
     {
-      "path": "../libs/shared/tsconfig.lib.json"
+      "path": "../../libs/shared/tsconfig.lib.json"
     }
   ]
 }

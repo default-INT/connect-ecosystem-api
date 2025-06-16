@@ -4,13 +4,10 @@
   "files": [],
   "references": [
     {
-      "path": "./api-gateway-e2e"
-    },
-    {
-      "path": "./api-gateway"
-    },
-    {
       "path": "./libs/shared"
+    },
+    {
+      "path": "./apps/api-gateway"
     }
   ]
 }
