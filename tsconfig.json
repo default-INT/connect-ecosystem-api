@@ -11,6 +11,9 @@
     },
     {
       "path": "./apps/user-service"
+    },
+    {
+      "path": "./apps/auth-service"
     }
   ]
 }

@@ -46,9 +46,7 @@
         "assets": ["{projectRoot}/src/assets"],
         "platform": "node",
         "generateDeclarations": false,
-        "format": [
-          "cjs"
-        ],
+        "format": ["cjs"],
         "bundle": true,
         "target": "node20",
         "esbuildOptions": {
