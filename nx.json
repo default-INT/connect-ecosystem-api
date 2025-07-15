@@ -46,6 +46,7 @@
         "assets": ["{projectRoot}/src/assets"],
         "platform": "node",
         "generateDeclarations": false,
+        "declaration": false,
         "format": ["cjs"],
         "bundle": true,
         "target": "node20",
@@ -57,12 +58,17 @@
         }
       },
       "configurations": {
-        "development": {},
+        "development": {
+          "skipTypeCheck": true
+        },
         "production": {
+          "bundle": true,
+          "external": [],
           "metafile": true,
           "esbuildOptions": {
             "minify": true,
             "sourcemap": false,
+            "splitting": false,
             "outExtension": {
               ".js": ".js"
             }

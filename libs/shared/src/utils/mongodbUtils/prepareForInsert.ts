@@ -1,4 +1,4 @@
-import { CreateEntity, Entity } from '../../model/entities';
+import { CreateEntity, Entity } from '../../model';
 import { OptionalUnlessRequiredId } from 'mongodb';
 
 export const prepareForInsert = <T extends Entity>(entity: CreateEntity<T>) => {
@@ -6,8 +6,8 @@ export const prepareForInsert = <T extends Entity>(entity: CreateEntity<T>) => {
 
   return {
     ...entity,
-    createdAt: date,
-    updatedAt: date,
+    createdAt: entity.createdAt || date,
+    updatedAt: entity.updatedAt || date,
     deletedAt: null,
     isDeleted: false,
   } as OptionalUnlessRequiredId<T>

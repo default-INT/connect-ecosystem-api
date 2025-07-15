@@ -6,11 +6,9 @@ export interface Entity {
   isDeleted: boolean
 }
 
-export type CreateEntity<T extends Entity> = Omit<T,
+export type CreateEntity<T extends Entity> = Omit<Partial<T>,
   | '_id'
-  | 'createdAt'
   | 'deletedAt'
-  | 'updatedAt'
   | 'isDeleted'
 >
 export type UpdateEntity<T extends Entity> = { _id: T['_id'] } & Partial<Omit<T, '_id'>>

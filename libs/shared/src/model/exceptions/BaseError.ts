@@ -1,8 +1,11 @@
 export class BaseError extends Error {
   originalError?: Error;
+  success: boolean
 
   constructor(message: string, originalError?: Error) {
     super(message);
+    this.success = false
+    this.message = message;
     this.name = this.constructor.name;
     this.originalError = originalError;
 

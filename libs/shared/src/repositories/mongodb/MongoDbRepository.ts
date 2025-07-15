@@ -5,10 +5,10 @@ import {
   ObjectId,
   MongoClient, ClientSession,
 } from 'mongodb';
-import { Repository } from '../../model/data';
-import { CreateEntity, Entity, objectIdSchema, UpdateEntity } from '../../model/entities';
+import { Repository } from '../../model';
+import { CreateEntity, Entity, objectIdSchema, UpdateEntity } from '../../model';
 import { mongodbUtils } from '../../utils';
-import { DbDeleteManyError, DbInvalidIdError, DbTransactionError } from '../../model/exceptions';
+import { DbDeleteManyError, DbInvalidIdError, DbTransactionError } from '../../model';
 
 export abstract class MongoDbRepository<T extends Entity> implements Repository<T> {
   protected source: MongoCollection<T>

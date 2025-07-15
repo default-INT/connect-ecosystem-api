@@ -1,90 +1,273 @@
-# ConnectEcosystemApi
+# Connect Ecosystem API
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+![Node.js](https://img.shields.io/badge/node-v20.10.0-green) ![NPM](https://img.shields.io/badge/npm-10.2.3-blue) ![Express](https://img.shields.io/badge/express-4.21.2-yellow) ![MongoDB](https://img.shields.io/badge/mongodb-6.17.0-green) ![TypeScript](https://img.shields.io/badge/typescript-5.7.2-blue) ![Nx](https://img.shields.io/badge/nx-21.1.1-purple)
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+A microservices ecosystem built with **Nx monorepo**, **TypeScript**, **Express.js**, and **MongoDB**. This project provides a scalable architecture for building interconnected services with shared libraries and consistent development practices.
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## 🚀 Features
 
-## Finish your CI setup
+- **Microservices Architecture**: Independent, scalable services
+- **Nx Monorepo**: Efficient build system and development experience
+- **TypeScript**: Type-safe development across all services
+- **Express.js**: Fast and lightweight web framework
+- **MongoDB**: Flexible document database with strong typing
+- **Shared Libraries**: Reusable code across services
+- **ESLint & Prettier**: Code quality and consistency
+- **Hot Reload**: Fast development with live reloading
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/JC2g5xDL4i)
-
-
-## Generate a library
-
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
-```
-
-## Run tasks
-
-To build the library use:
-
-```sh
-npx nx build pkg1
-```
-
-To run any task with Nx use:
-
-```sh
-npx nx <target> <project-name>
-```
-
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
-
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Versioning and releasing
-
-To version and release the library use
+## 📁 Project Structure
 
 ```
-npx nx release
+connect-ecosystem-api/
+├── apps/                          # Microservices applications
+│   ├── api-gateway/               # API Gateway service
+│   │   ├── src/
+│   │   │   └── main.ts           # Gateway entry point
+│   │   ├── package.json
+│   │   └── project.json          # Nx project configuration
+│   ├── auth-service/              # Authentication service
+│   │   ├── src/
+│   │   │   ├── main.ts           # Auth service entry point
+│   │   │   ├── config/           # Configuration files
+│   │   │   │   ├── db.ts         # Database configuration
+│   │   │   │   └── env.ts        # Environment variables
+│   │   │   ├── model/            # Auth data models
+│   │   │   │   ├── dto/          # Data Transfer Objects
+│   │   │   │   │   ├── LoginRequestDto.ts
+│   │   │   │   │   ├── RefreshTokenDto.ts
+│   │   │   │   │   ├── TokenPairResponseDto.ts
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── entities/     # Auth entities
+│   │   │   │   │   ├── AuthType.ts
+│   │   │   │   │   ├── Credentials.ts
+│   │   │   │   │   ├── RefreshToken.ts
+│   │   │   │   │   └── index.ts
+│   │   │   │   ├── exceptions/   # Custom exceptions
+│   │   │   │   │   ├── 400/      # Bad Request errors
+│   │   │   │   │   │   ├── UserAlreadyExistsError.ts
+│   │   │   │   │   │   └── index.ts
+│   │   │   │   │   ├── 401/      # Unauthorized errors
+│   │   │   │   │   │   ├── InvalidIdentifierError.ts
+│   │   │   │   │   │   ├── InvalidPasswordError.ts
+│   │   │   │   │   │   ├── InvalidTokenError.ts
+│   │   │   │   │   │   ├── TokenExpiredError.ts
+│   │   │   │   │   │   └── index.ts
+│   │   │   │   │   └── index.ts
+│   │   │   │   └── index.ts
+│   │   │   ├── repositories/     # Data access layer
+│   │   │   │   ├── CredentialsRepository.ts
+│   │   │   │   ├── RefreshTokenRepository.ts
+│   │   │   │   └── index.ts
+│   │   │   ├── routes/           # API routes
+│   │   │   │   ├── getAuthRoutes.ts
+│   │   │   │   └── index.ts
+│   │   │   └── services/         # Business logic
+│   │   │       ├── AuthService.ts
+│   │   │       ├── utils/        # Service utilities
+│   │   │       │   ├── verifyByOauthGoogle.ts
+│   │   │       │   ├── verifyByPassword.ts
+│   │   │       │   └── index.ts
+│   │   │       └── index.ts
+│   │   └── package.json
+│   └── user-service/              # User management service
+│       ├── src/
+│       │   └── main.ts           # User service entry point
+│       └── package.json
+├── libs/                          # Shared libraries
+│   └── shared/                    # Common utilities and models
+│       ├── src/
+│       │   ├── lib/              # Shared business logic
+│       │   ├── model/            # Common data models
+│       │   │   ├── entities/     # Base entities
+│       │   │   ├── data/         # Repository interfaces
+│       │   │   └── exceptions/   # Error handling
+│       │   ├── repositories/     # Database repositories
+│       │   │   └── mongodb/      # MongoDB implementations
+│       │   └── utils/            # Utility functions
+│       └── package.json
+├── package.json                   # Root package configuration
+├── nx.json                       # Nx workspace configuration
+└── tsconfig.base.json            # Base TypeScript configuration
 ```
 
-Pass `--dry-run` to see what would happen without actually releasing the library.
+## 🛠️ Getting Started
 
-[Learn more about Nx release &raquo;](hhttps://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### Prerequisites
 
-## Keep TypeScript project references up to date
+Make sure you have the following installed:
 
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
+- **Node.js** v20.10.0 or higher
+- **npm** v10.2.3 or higher
+- **MongoDB** instance (local or cloud)
 
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
+### Installation
 
-```sh
-npx nx sync
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd connect-ecosystem-api
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Build the workspace:**
+   ```bash
+   npx nx run-many -t build
+   ```
+
+4. **Start the API Gateway:**
+   ```bash
+   npm run serve
+   ```
+
+## 📋 Available Scripts
+
+The following scripts are available in `package.json`:
+
+| Script | Command | Description |
+|--------|---------|-------------|
+| `serve` | `nx serve api-gateway` | Start the API Gateway in development mode |
+| `serve:prod` | `nx serve api-gateway --configuration=production` | Start the API Gateway in production mode |
+| `serve:auth:dev` | `nx serve auth-service --configuration=development` | Start the Auth Service in development mode |
+| `serve:auth:prod` | `nx serve auth-service --configuration=production` | Start the Auth Service in production mode |
+
+### Additional Nx Commands
+
+| Command | Description |
+|---------|-------------|
+| `npx nx build <app-name>` | Build a specific application |
+| `npx nx serve <app-name>` | Serve a specific application |
+| `npx nx lint <app-name>` | Lint a specific application |
+| `npx nx test <app-name>` | Run tests for a specific application |
+| `npx nx run-many -t build` | Build all applications |
+| `npx nx run-many -t lint` | Lint all applications |
+| `npx nx graph` | View project dependency graph |
+
+## 🆕 Adding New Services
+
+To add a new microservice to the ecosystem:
+
+### 1. Generate a new Node.js application:
+```bash
+npx nx g @nx/express:application my-new-service
 ```
 
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
-
-```sh
-npx nx sync:check
+### 2. For a custom Node.js service:
+```bash
+npx nx g @nx/node:application my-new-service
 ```
 
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
+### 3. Configure the service:
+- Update `apps/my-new-service/project.json` with build and serve targets
+- Add service-specific dependencies to `apps/my-new-service/package.json`
+- Configure TypeScript in `apps/my-new-service/tsconfig.app.json`
 
+### 4. Example service structure:
+```
+apps/my-new-service/
+├── src/
+│   ├── main.ts              # Service entry point
+│   ├── controllers/         # Request handlers
+│   ├── services/           # Business logic
+│   ├── models/             # Data models
+│   └── routes/             # API routes
+├── package.json
+├── project.json
+└── tsconfig.app.json
+```
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## 📚 Adding New Libraries
 
-## Install Nx Console
+To add a new shared library:
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+### 1. Generate a publishable library:
+```bash
+npx nx g @nx/js:library my-new-lib --publishable --importPath=@connect-ecosystem-api/my-new-lib
+```
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### 2. Generate a simple library:
+```bash
+npx nx g @nx/js:library my-new-lib
+```
 
-## Useful links
+### 3. Library best practices:
+- Place reusable models in `libs/my-new-lib/src/model/`
+- Add utilities in `libs/my-new-lib/src/utils/`
+- Export public API through `libs/my-new-lib/src/index.ts`
+- Update `tsconfig.base.json` paths if needed
 
-Learn more:
+### 4. Example library structure:
+```
+libs/my-new-lib/
+├── src/
+│   ├── index.ts            # Public API exports
+│   ├── lib/               # Core library code
+│   ├── models/            # Data models
+│   └── utils/             # Utility functions
+├── package.json
+└── tsconfig.lib.json
+```
 
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## 🗄️ Database Configuration
 
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+The project uses **MongoDB** with the following setup:
+
+- **Driver**: `mongodb@6.17.0`
+- **Repository Pattern**: Located in `libs/shared/src/repositories/mongodb/`
+- **Models**: Shared entities in `libs/shared/src/model/entities/`
+- **Validation**: Using `yup@1.6.1` for schema validation
+
+## 🧪 Development Workflow
+
+1. **Start development:**
+   ```bash
+   npm run serve
+   ```
+
+2. **Build specific service:**
+   ```bash
+   npx nx build auth-service
+   ```
+
+3. **Run linting:**
+   ```bash
+   npx nx run-many -t lint
+   ```
+
+4. **View project graph:**
+   ```bash
+   npx nx graph
+   ```
+
+## 🔧 Technologies Used
+
+- **[Nx](https://nx.dev/)** - Smart monorepos build system
+- **[TypeScript](https://www.typescriptlang.org/)** - Type-safe JavaScript
+- **[Express.js](https://expressjs.com/)** - Web application framework
+- **[MongoDB](https://www.mongodb.com/)** - Document database
+- **[ESBuild](https://esbuild.github.io/)** - Fast JavaScript bundler
+- **[ESLint](https://eslint.org/)** - Code linting
+- **[Prettier](https://prettier.io/)** - Code formatting
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📞 Support
+
+For support and questions, please open an issue in the repository.
+
+---
+
+Built with ❤️ using [Nx](https://nx.dev) and [TypeScript](https://www.typescriptlang.org/)
