@@ -7,14 +7,10 @@
     "serve:prod": "nx serve api-gateway --configuration=production",
     "serve:auth:dev": "nx serve auth-service --configuration=development",
     "serve:auth:prod": "nx serve auth-service --configuration=production",
-
     "lint:auth": "nx lint auth-service",
     "lint:affected": "npx nx affected -t lint --parallel=3",
-
     "build:affected": "npx nx affected -t build --parallel=3",
-
     "tsc:affected": "npx nx affected -t typecheck --parallel=3 ",
-
     "list:affected": "npx nx show projects --affected --with-target=build"
   },
   "private": true,
@@ -32,6 +28,7 @@
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
     "@types/express": "^4.17.21",
+    "@types/morgan": "^1.9.10",
     "@types/node": "~18.16.9",
     "esbuild": "^0.19.2",
     "eslint": "^9.8.0",
@@ -51,10 +48,12 @@
   ],
   "dependencies": {
     "axios": "^1.6.0",
-    "express": "^4.21.2",
     "dotenv": "^17.2.0",
+    "express": "^4.21.2",
     "mongodb": "^6.17.0",
+    "morgan": "^1.10.0",
     "node-cron": "^4.2.1",
+    "winston": "^3.17.0",
     "yup": "^1.6.1"
   }
 }

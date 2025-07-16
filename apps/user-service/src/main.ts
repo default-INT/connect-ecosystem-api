@@ -1,5 +1,5 @@
 import express from 'express';
-import { shared } from '@connect-ecosystem-api/shared';
+import { appLogger, shared } from '@connect-ecosystem-api/shared';
 
 const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 4002;
@@ -10,5 +10,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, host, () => {
-  console.log(`[ ready ] http://${host}:${port}`);
+  appLogger.info(`[ ready ] http://${host}:${port}`);
 });
