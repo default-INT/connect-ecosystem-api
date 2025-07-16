@@ -4,4 +4,4 @@ export class UserAlreadyExistsError extends BadRequest400Error {
   constructor(identifier: string, message?: string) {
     super(message || `User with identifier '${identifier}' already exists`);
   }
-} 
+}

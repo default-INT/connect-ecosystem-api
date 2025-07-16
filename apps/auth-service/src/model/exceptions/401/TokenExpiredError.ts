@@ -4,4 +4,4 @@ export class TokenExpiredError extends Unauthorized401Error {
   constructor(message = 'Token expired', originalError?: Error) {
     super(message, originalError);
   }
-} 
+}

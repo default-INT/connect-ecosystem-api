@@ -1,6 +1,7 @@
 import { StringValue } from 'ms';
 
 export const env = {
+  nodeEnv: process.env.NODE_ENV || 'development',
   host: process.env.HOST || 'localhost',
   port: process.env.PORT ? Number(process.env.PORT) : 4001,
   mongoUri: process.env.MONGODB_URI || 'mongodb://localhost:27017',
@@ -14,7 +15,7 @@ export const env = {
     jwtAccessSecret: (process.env.JWT_ACCESS_SECRET || 'JWT_ACCESS_SECRET') as string,
     jwtRefreshSecret: (process.env.JWT_REFRESH_SECRET || 'JWT_REFRESH_SECRET') as string,
     accessExpiresIn: (process.env.ACCESS_EXPIRES_IN || '15m') as StringValue,
-    refreshExpiresIn: (process.env.ACCESS_EXPIRES_IN || '15d') as StringValue,
+    refreshExpiresIn: (process.env.REFRESH_EXPIRES_IN || '15d') as StringValue,
     cleanupIntervalInMin: Number(process.env.CLEARUP_REFRESH_TOKENS_IN_MIN || 10),
   },
 }

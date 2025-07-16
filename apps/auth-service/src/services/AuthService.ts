@@ -96,7 +96,9 @@ export class AuthService {
     const existingCredentials = await this.credentialsRepository.findByIdentifier(authType, identifier);
     if (existingCredentials) throw new UserAlreadyExistsError(identifier);
 
-    if (passwordRequiredAuthTypes.includes(authType) && !password) throw new Unauthorized401Error(`Password is required for this auth type - ${authType}`);
+    if (passwordRequiredAuthTypes.includes(authType) && !password) {
+      throw new Unauthorized401Error(`Password is required for this auth type - ${authType}`);
+    }
 
     // TODO: temporary
     const userId = crypto.randomUUID();
