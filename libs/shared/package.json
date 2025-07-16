@@ -16,5 +16,10 @@
   },
   "dependencies": {
     "tslib": "^2.3.0"
+  },
+  "peerDependencies": {
+    "express": "^4.21.2",
+    "yup": "^1.6.1",
+    "mongodb": "^6.17.0"
   }
 }

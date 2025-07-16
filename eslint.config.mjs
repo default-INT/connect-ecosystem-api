@@ -73,7 +73,7 @@ export default [
       'no-await-in-loop': 'off',
       'no-restricted-syntax': 'off',
       'no-nested-ternary': 'error',
-      'max-len': ['error', { code: 100 }],
+      'max-len': ['error', { code: 130 }],
       'prefer-spread': 'off',
       'arrow-parens': ['error', 'as-needed'],
       'no-param-reassign': 'error',

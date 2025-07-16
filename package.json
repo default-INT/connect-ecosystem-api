@@ -6,7 +6,16 @@
     "serve": "nx serve api-gateway",
     "serve:prod": "nx serve api-gateway --configuration=production",
     "serve:auth:dev": "nx serve auth-service --configuration=development",
-    "serve:auth:prod": "nx serve auth-service --configuration=production"
+    "serve:auth:prod": "nx serve auth-service --configuration=production",
+
+    "lint:auth": "nx lint auth-service",
+    "lint:affected": "npx nx affected -t lint --parallel=3",
+
+    "build:affected": "npx nx affected -t build --parallel=3",
+
+    "tsc:affected": "npx nx affected -t typecheck --parallel=3 ",
+
+    "list:affected": "npx nx show projects --affected --with-target=build"
   },
   "private": true,
   "devDependencies": {
@@ -43,6 +52,7 @@
   "dependencies": {
     "axios": "^1.6.0",
     "express": "^4.21.2",
+    "dotenv": "^17.2.0",
     "mongodb": "^6.17.0",
     "node-cron": "^4.2.1",
     "yup": "^1.6.1"

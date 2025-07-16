@@ -6,7 +6,8 @@ import * as console from 'node:console';
 
 const SERVER_ERROR_STATUS = 500
 
-export const errorHandlerMiddleware = (err: Error, _: Request, res: Response, next: NextFunction) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const errorHandlerMiddleware = (err: Error, _: Request, res: Response, __: NextFunction) => {
   console.log('err', err)
   if (err instanceof ValidationError) {
     const message = err.errors.join(', ')
