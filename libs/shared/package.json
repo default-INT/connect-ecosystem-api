@@ -20,6 +20,8 @@
   "peerDependencies": {
     "express": "^4.21.2",
     "yup": "^1.6.1",
-    "mongodb": "^6.17.0"
+    "mongodb": "^6.17.0",
+    "morgan": "^1.10.0",
+    "winston": "^3.17.0"
   }
 }

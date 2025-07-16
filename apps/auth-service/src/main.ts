@@ -1,6 +1,6 @@
 import express, { json } from 'express';
 import cron from 'node-cron';
-import { errorHandlerWrapper } from '@connect-ecosystem-api/shared';
+import { errorHandlerWrapper, loggerMiddleware, appLogger } from '@connect-ecosystem-api/shared';
 import { env } from './config/env';
 import { initDb } from './config/db';
 import { CredentialsRepository, RefreshTokenRepository } from './repositories';
@@ -18,6 +18,7 @@ export const run = async () => {
   const authService = new AuthService(credentialRepo, refreshTokenRepo)
 
   app.use(json())
+  app.use(loggerMiddleware(appLogger))
   app.use(getAuthRoutes(authService))
 
   cron.schedule(`*/${env.tokens.cleanupIntervalInMin} * * * *`, refreshTokenRepo.deleteExpired)
@@ -25,7 +26,7 @@ export const run = async () => {
   errorHandlerWrapper(app)
 
   app.listen(port, host, () => {
-    console.log(`[ ready ] http://${host}:${port}`);
+    appLogger.info(`[ ready ] http://${host}:${port}`)
   });
 }
 
