@@ -22,11 +22,11 @@ jobs:
 
       - name: Build shared
         run: |
-          nx build shared
+          npx nx build shared
 
       - name: Build auth-service
         run: |
-          nx build auth-service
+          npx nx build auth-service
 
       - name: Build Swagger
         run: |
