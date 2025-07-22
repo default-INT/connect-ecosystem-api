@@ -6,6 +6,7 @@ import { initDb } from './config/db';
 import { CredentialsRepository, RefreshTokenRepository } from './repositories';
 import { AuthService } from './services';
 import { getAuthRoutes } from './routes';
+import { setupSwagger } from './swagger';
 
 const host = env.host;
 const port = env.port;
@@ -19,6 +20,9 @@ export const run = async () => {
 
   app.use(json())
   app.use(loggerMiddleware(appLogger))
+
+  setupSwagger(app)
+
   app.use(getAuthRoutes(authService))
 
   cron.schedule(`*/${env.tokens.cleanupIntervalInMin} * * * *`, refreshTokenRepo.deleteExpired)
@@ -27,6 +31,7 @@ export const run = async () => {
 
   app.listen(port, host, () => {
     appLogger.info(`[ ready ] http://${host}:${port}`)
+    appLogger.info(`[ swagger ] http://${host}:${port}/api-docs`)
   });
 }
 
