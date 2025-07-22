@@ -20,6 +20,14 @@ jobs:
       - name: Install deps
         run: npm i
 
+      - name: Build shared
+        run: |
+          nx build shared
+
+      - name: Build auth-service
+        run: |
+          nx build auth-service
+
       - name: Build Swagger
         run: |
           npm run generate:swagger --workspace=apps/auth-service
