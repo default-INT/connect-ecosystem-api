@@ -11,6 +11,13 @@ export const swaggerUtils = {
   saveSpecToFile,
 };
 
-export type { OpenApiInfo, OpenApiSpec } from './generateOpenApiSpec';
+export type {
+  OpenApiInfo,
+  OpenApiSpec,
+  OpenApiSecurityScheme,
+  GenerateOpenApiSpecOptions,
+} from './generateOpenApiSpec';
+
 export type { SwaggerMiddlewareConfig } from './createSwaggerMiddleware';
+
 export type { YupDescription, YupTest, OpenApiSchema } from './yupConverter';

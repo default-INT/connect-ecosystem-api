@@ -27,3 +27,15 @@ export const BaseSchemaOptional = object().shape({
 export type IBaseOptional = InferType<typeof BaseSchemaOptional>
 export type IBase = InferType<typeof BaseSchema>
 export type Id = InferType<typeof objectIdSchema>
+
+export interface JwtAccessPayload {
+  userId: string;
+  appId: string;
+  jti: string;
+}
+
+export interface JwtRefreshPayload {
+  tokenId: string;
+  userId: string;
+  appId: string;
+}

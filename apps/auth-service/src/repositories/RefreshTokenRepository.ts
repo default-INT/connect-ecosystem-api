@@ -1,5 +1,5 @@
 import { Db, MongoClient } from 'mongodb';
-import { MongoDbRepository } from '@connect-ecosystem-api/shared';
+import { DbTransactionError, MongoDbRepository } from '@connect-ecosystem-api/shared';
 import { RefreshToken } from '../model';
 import { env } from '../config/env';
 
@@ -27,6 +27,10 @@ export class RefreshTokenRepository extends MongoDbRepository<RefreshToken> {
     }).toArray()
   }
 
+  findByAccessTokenJti(accessTokenJti: string): Promise<RefreshToken | null> {
+    return this.source.findOne({ accessTokenJti })
+  }
+
   async revokeByTokenHash(hash: string): Promise<boolean> {
     const revokedAt = new Date().toISOString();
 
@@ -50,10 +54,15 @@ export class RefreshTokenRepository extends MongoDbRepository<RefreshToken> {
   }
 
   async revokeAllByUser(userId: string, appId?: string): Promise<boolean> {
-    const revokedAt = new Date().toISOString();
-    const result = await this.source.updateMany({ userId, appId }, { $set: { revokedAt } })
+    return await this.withTransaction(async session => {
+      const revokedAt = new Date().toISOString();
+      const filter = appId ? { userId, appId } : { userId };
+      const result = await this.source.updateMany(filter, { $set: { revokedAt } }, { session });
 
-    return result.acknowledged
+      if (!result.acknowledged) throw new DbTransactionError('Failed to revoke tokens');
+
+      return result.acknowledged
+    });
   }
 
   async deleteExpired(): Promise<number> {
@@ -61,6 +70,16 @@ export class RefreshTokenRepository extends MongoDbRepository<RefreshToken> {
 
     const result = await this.source.deleteMany({
       expiryAt: { $lt: now },
+    });
+
+    return result.deletedCount ?? 0
+  }
+
+  async deleteRevoked(): Promise<number> {
+    const now = new Date().toISOString();
+
+    const result = await this.source.deleteMany({
+      revokedAt: { $lt: now },
     });
 
     return result.deletedCount ?? 0

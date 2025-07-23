@@ -147,18 +147,8 @@ export const authPaths: OpenApiPaths = {
   '/logout': {
     post: {
       summary: 'Logout',
-      description: 'Deactivation of refresh token',
+      description: 'Deactivation of access and refresh tokens. Requires Authorization header with Bearer token.',
       tags: ['Authentication'],
-      requestBody: {
-        required: true,
-        content: {
-          'application/json': {
-            schema: {
-              $ref: '#/components/schemas/RefreshTokenDto',
-            },
-          },
-        },
-      },
       responses: {
         '200': {
           description: 'Successful logout',
@@ -171,7 +161,7 @@ export const authPaths: OpenApiPaths = {
           },
         },
         '401': {
-          description: 'Invalid refresh token',
+          description: 'Invalid or missing access token',
           content: {
             'application/json': {
               schema: {

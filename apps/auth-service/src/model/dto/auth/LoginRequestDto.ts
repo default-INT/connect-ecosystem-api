@@ -1,4 +1,4 @@
-import { AuthType } from '../entities';
+import { AuthType } from '../../entities';
 import * as Yup from 'yup'
 
 export interface LoginRequestDto {
