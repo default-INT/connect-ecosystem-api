@@ -10,6 +10,7 @@ export const env = {
   collections: {
     credentials: process.env.CREDENTIALS_COLL_NAME || 'credentials',
     refreshToken: process.env.REFRESH_TOKEN_COLL_NAME || 'refresh_token',
+    revokedAccessToken: process.env.REVOKED_ACCESS_TOKEN_COLL_NAME || 'revoked_access_token',
   },
   tokens: {
     jwtAccessSecret: (process.env.JWT_ACCESS_SECRET || 'JWT_ACCESS_SECRET') as string,

@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import { BadRequest400Error } from '@connect-ecosystem-api/shared';
-import { Credentials, InvalidIdentifierError, InvalidPasswordError, LoginRequestDto } from '../../model';
+import { Credentials, InvalidIdentifierError, InvalidPasswordError, LoginRequestDto } from '../../../model';
 
 export const verifyByPassword = async (credentials: Credentials, loginData: LoginRequestDto) => {
   if (!loginData.password) throw new BadRequest400Error('Password is required');

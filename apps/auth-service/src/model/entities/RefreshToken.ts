@@ -10,4 +10,6 @@ export interface RefreshToken extends Entity {
   ipAddress?: string | null;
   userAgent?: string | null;
   sessionId?: string | null;
+  accessTokenJti: string;
+  accessTokenExpiresAt: string;
 }

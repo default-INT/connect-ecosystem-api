@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { asyncSaveHandler } from '@connect-ecosystem-api/shared';
+import { asyncSaveHandler, Unauthorized401Error } from '@connect-ecosystem-api/shared';
 import { AuthService } from '../services';
 import {
   LoginRequestDto,
@@ -33,10 +33,15 @@ export const getAuthRoutes = (authService: AuthService) => {
     res.json(response);
   }))
 
-  router.post('/logout', asyncSaveHandler<object, RefreshTokenDto, boolean>(async (req, res) => {
-    const { refreshToken } = await refreshTokenSchema.validate(req.body);
+  router.post('/logout', asyncSaveHandler<object, object, boolean>(async (req, res) => {
+    const authHeader = req.headers.authorization;
 
-    await authService.logout(refreshToken);
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      throw new Unauthorized401Error('Authorization header required');
+    }
+
+    const accessToken = authHeader.replace('Bearer ', '');
+    await authService.logout(accessToken);
 
     res.json(true);
   }))

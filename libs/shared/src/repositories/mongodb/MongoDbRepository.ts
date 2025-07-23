@@ -23,7 +23,7 @@ export abstract class MongoDbRepository<T extends Entity> implements Repository<
     this.source = db.collection(name);
   }
 
-  protected async withTransaction(transactionFn: (session: ClientSession) => Promise<void>) {
+  protected async withTransaction<R>(transactionFn: (session: ClientSession) => Promise<R>): Promise<R> {
     const session = this.client.startSession()
     try {
       session.startTransaction()
