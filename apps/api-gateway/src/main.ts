@@ -1,9 +1,25 @@
 import express from 'express';
-import { appLogger, shared } from '@connect-ecosystem-api/shared';
+import {
+  appLogger,
+  errorHandlerWrapper,
+  loggerMiddleware,
+  shared,
+} from '@connect-ecosystem-api/shared';
+import { env } from './config/env';
+import { getApiServiceRoutes } from './routes';
 
-const host = process.env.HOST ?? 'localhost';
-const port = process.env.PORT ? Number(process.env.PORT) : 4000;
+const host = env.host;
+const port = env.port;
 const app = express();
+
+app.use(express.json())
+app.use(loggerMiddleware(appLogger))
+
+const apiRoutes = getApiServiceRoutes()
+
+app.use('/api', apiRoutes)
+
+errorHandlerWrapper(app)
 
 app.get('/', (req, res) => {
   res.send({ message: 'Hello API gateway - ' + shared() });

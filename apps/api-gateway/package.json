@@ -1,5 +1,8 @@
 {
   "name": "@connect-ecosystem-api/api-gateway",
   "version": "0.0.1",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "http-proxy-middleware": "^3.0.5"
+  }
 }
