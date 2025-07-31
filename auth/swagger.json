@@ -68,9 +68,85 @@
           "refreshToken",
           "refreshTokenExpiresAt"
         ]
+      },
+      "ValidateTokenRequestDto": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "accessToken"
+        ]
+      },
+      "ValidateTokenResponseDto": {
+        "type": "object",
+        "properties": {
+          "valid": {
+            "type": "boolean"
+          },
+          "payload": {
+            "type": "object",
+            "properties": {
+              "userId": {
+                "type": "string"
+              },
+              "appId": {
+                "type": "string"
+              },
+              "jti": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "userId",
+              "appId",
+              "jti"
+            ]
+          }
+        },
+        "required": [
+          "valid"
+        ]
+      },
+      "RevokeTokenRequestDto": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "accessToken"
+        ]
+      },
+      "RevokeTokenResponseDto": {
+        "type": "object",
+        "properties": {
+          "isRevoked": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "isRevoked"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Enter your access token"
       }
     }
   },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
   "servers": [
     {
       "url": "http://localhost:4001",
@@ -246,20 +322,10 @@
     "/logout": {
       "post": {
         "summary": "Logout",
-        "description": "Deactivation of refresh token",
+        "description": "Deactivation of access and refresh tokens. Requires Authorization header with Bearer token.",
         "tags": [
           "Authentication"
         ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RefreshTokenDto"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Successful logout",
@@ -272,7 +338,123 @@
             }
           },
           "401": {
-            "description": "Invalid refresh token",
+            "description": "Invalid or missing access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/validate-token": {
+      "post": {
+        "summary": "Validate access token",
+        "description": "Validates access token and returns payload if valid",
+        "tags": [
+          "Internal"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidateTokenRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Token validation result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidateTokenResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or expired token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/is-revoked-token": {
+      "post": {
+        "summary": "Check if token is revoked",
+        "description": "Checks if access token has been revoked",
+        "tags": [
+          "Internal"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RevokeTokenRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Token revocation status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RevokeTokenResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request data",
             "content": {
               "application/json": {
                 "schema": {
