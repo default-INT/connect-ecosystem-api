@@ -1,3 +1,5 @@
 export * from './400'
 export * from './401'
 export * from './404'
+export * from './502'
+export * from './504'

@@ -19,6 +19,10 @@ export const getAuthRoutes = (authService: AuthService) => {
     res.json(response);
   }))
 
+  router.get('/health', (req, res) => {
+    res.json(true)
+  })
+
   router.post('/register', asyncSaveHandler<object, LoginRequestDto, TokenPairResponseDto>(async (req, res) => {
     const loginData = await loginRequestSchema.validate(req.body);
     const response = await authService.register(loginData);
