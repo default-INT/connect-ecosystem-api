@@ -1,0 +1,25 @@
+{
+  "name": "@connect-ecosystem-api/yup-to-swagger",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "module": "./dist/index.js",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "development": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "peerDependencies": {
+    "express": "^4.21.2",
+    "yup": "^1.6.1",
+    "swagger-ui-express": "^5.0.1"
+  }
+}

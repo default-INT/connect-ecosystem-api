@@ -1,4 +1,4 @@
-import { JwtAccessPayload } from '@connect-ecosystem-api/shared';
+import { JwtAccessPayload } from '@connect-ecosystem-api/api';
 
 declare global {
   namespace Express {

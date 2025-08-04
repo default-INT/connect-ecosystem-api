@@ -27,11 +27,6 @@ export const createSwaggerMiddleware = (app: Application, config: SwaggerMiddlew
       filter: true,
       showRequestDuration: true,
     },
-    customCss: `
-      .swagger-ui .topbar { display: none }
-      .swagger-ui .info { margin: 50px 0 }
-      .swagger-ui .info .title { color: #3b82f6 }
-    `,
     customSiteTitle: `${spec.info?.title || 'API'} Documentation`,
   };
 
@@ -42,9 +37,11 @@ export const createSwaggerMiddleware = (app: Application, config: SwaggerMiddlew
     res.send(spec);
   });
 
-  app.use(uiPath, swaggerUi.serve, swaggerUi.setup(spec, swaggerOptions));
+  app.use(uiPath, swaggerUi.serve);
+  app.get(uiPath, swaggerUi.setup(spec, swaggerOptions));
+  app.get(uiPath.replace(/\/$/, ''), swaggerUi.setup(spec, swaggerOptions));
 
-  app.get(infoPath, (req, res) => {
+  app.get(infoPath, (_, res) => {
     res.json({
       message: `${spec.info?.title || 'API'} Documentation`,
       endpoints: {

@@ -49,7 +49,7 @@ npm run serve:auth:dev
 ### Using swaggerUtils from shared
 
 ```typescript
-import { swaggerUtils } from '@connect-ecosystem-api/shared';
+import { swaggerUtils } from '@connect-ecosystem-api/yup-to-swagger';
 
 // Instead of local YupToOpenApiConverter now using:
 const spec = swaggerUtils.generateOpenApiSpec(schemas, info);

@@ -1,10 +1,24 @@
 import { Express, NextFunction, Request, Response } from 'express';
 import { ValidationError } from 'yup';
-import { BadRequest400Error } from '../model';
+import { BadRequest400Error, BaseError } from '../model';
 import { BaseHttpError } from '../model/exceptions/http/BaseHttpError';
 import { appLogger } from '../utils';
+import * as process from 'node:process';
 
 const SERVER_ERROR_STATUS = 500
+const isProduction = process.env.NODE_ENV === 'production';
+
+const toDisplayError = (err: Error) => {
+  const isBaseError = err instanceof BaseError
+
+  return {
+    ...err,
+    message: err.message,
+    stack: isProduction ? undefined : err.stack,
+    originalError: (!isProduction && isBaseError) ? err.originalError : undefined,
+    stackMessage: (!isProduction && isBaseError) ? err.stackMessage : undefined,
+  }
+}
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const errorHandlerMiddleware = (err: Error, _: Request, res: Response, __: NextFunction) => {
@@ -13,18 +27,18 @@ export const errorHandlerMiddleware = (err: Error, _: Request, res: Response, __
     const message = err.errors.join(', ')
     const badRequest = new BadRequest400Error(message)
 
-    res.status(400).send({ ...badRequest, message: badRequest.message });
+    res.status(400).send(toDisplayError(badRequest));
 
     return;
   }
 
   if (err instanceof BaseHttpError) {
-    res.status(err.status).send({ ...err, message: err.message })
+    res.status(err.status).send(toDisplayError(err));
 
     return;
   }
 
-  res.status(SERVER_ERROR_STATUS).send(err)
+  res.status(SERVER_ERROR_STATUS).send(toDisplayError(err))
 }
 
 export const errorHandlerWrapper = (app: Express) => {

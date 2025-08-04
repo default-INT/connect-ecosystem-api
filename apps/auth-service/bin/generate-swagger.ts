@@ -1,6 +1,6 @@
 #!/usr/bin/env ts-node
 import { resolve } from 'path';
-import { swaggerUtils } from '@connect-ecosystem-api/shared';
+import { saveSpecToFile } from '@connect-ecosystem-api/yup-to-swagger';
 import { swaggerSpec } from '../src/config/swagger';
 
 /**
@@ -11,7 +11,7 @@ const main = () => {
 
   try {
     const outputPath = resolve(__dirname, '../dist/swagger.json');
-    swaggerUtils.saveSpecToFile(swaggerSpec, outputPath);
+    saveSpecToFile(swaggerSpec, outputPath);
 
   } catch (error) {
     console.error('❌ Error generating specification:', error);

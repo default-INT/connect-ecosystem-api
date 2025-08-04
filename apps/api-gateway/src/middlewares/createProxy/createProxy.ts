@@ -16,9 +16,6 @@ export const createProxy = (serviceName: string, target: string, config?: ProxyC
   changeOrigin: true,
   timeout: DEFAULT_PROXY_TIMEOUT,
   proxyTimeout: DEFAULT_PROXY_TIMEOUT,
-  pathRewrite: {
-    '^/api': '',
-  },
 
   // NOTE: replace to blockedPathsMiddleware with 404 error?
   pathFilter: pathFilter(config?.blockedPaths),
