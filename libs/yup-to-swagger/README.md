@@ -30,7 +30,7 @@ swaggerUtils/
 ### Import
 
 ```typescript
-import { swaggerUtils } from '@connect-ecosystem-api/shared';
+import { swaggerUtils } from '@connect-ecosystem-api/yup-to-swagger';
 ```
 
 ### Basic Example
@@ -70,7 +70,7 @@ import {
   convertYupSchema, 
   convertStringSchema,
   stringTestHandlers 
-} from '@connect-ecosystem-api/shared/utils/swaggerUtils/yupConverter';
+} from '@connect-ecosystem-api/yup-to-swagger/utils/swaggerUtils/yupConverter';
 
 // Custom string test handling
 const customStringHandlers = {
@@ -153,7 +153,7 @@ swaggerUtils.saveSpecToFile(spec, './swagger.json');
 
 ```typescript
 // src/swagger/ServiceSchemaGenerator.ts
-import { swaggerUtils } from '@connect-ecosystem-api/shared';
+import { swaggerUtils } from '@connect-ecosystem-api/yup-to-swagger';
 import { schema1, schema2 } from '../model';
 
 export class ServiceSchemaGenerator {
@@ -183,7 +183,7 @@ export class ServiceSchemaGenerator {
 
 ```typescript
 // src/main.ts
-import { swaggerUtils } from '@connect-ecosystem-api/shared';
+import { swaggerUtils } from '@connect-ecosystem-api/yup-to-swagger';
 import { ServiceSchemaGenerator } from './swagger/ServiceSchemaGenerator';
 
 const app = express();

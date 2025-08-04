@@ -3,7 +3,6 @@ import {
   appLogger,
   errorHandlerWrapper,
   loggerMiddleware,
-  shared,
 } from '@connect-ecosystem-api/shared';
 import { env } from './config/env';
 import { getApiServiceRoutes } from './routes';
@@ -22,7 +21,7 @@ app.use('/api', apiRoutes)
 errorHandlerWrapper(app)
 
 app.get('/', (req, res) => {
-  res.send({ message: 'Hello API gateway - ' + shared() });
+  res.send({ message: 'Hello API gateway - ' });
 });
 
 app.listen(port, host, () => {

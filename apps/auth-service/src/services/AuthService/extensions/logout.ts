@@ -1,7 +1,7 @@
 import { AuthService } from '../AuthService';
 import jwt from 'jsonwebtoken';
 import { RevokeReason, TokenMismatchError } from '../../../model';
-import { JwtAccessPayload } from '@connect-ecosystem-api/shared';
+import { JwtAccessPayloadDto } from '@connect-ecosystem-api/api';
 import { env } from '../../../config/env';
 
 declare module '../AuthService' {
@@ -11,7 +11,7 @@ declare module '../AuthService' {
 }
 
 AuthService.prototype.logout = async function(accessToken) {
-  const decoded = jwt.verify(accessToken, env.tokens.jwtAccessSecret) as JwtAccessPayload;
+  const decoded = jwt.verify(accessToken, env.tokens.jwtAccessSecret) as JwtAccessPayloadDto;
   const stored = await this.refreshTokenRepository.findByAccessTokenJti(decoded.jti);
   if (!stored) throw new TokenMismatchError('Not found refresh token');
 

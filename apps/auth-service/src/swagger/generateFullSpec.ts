@@ -1,10 +1,12 @@
-import { OpenApiSpec, swaggerUtils } from '@connect-ecosystem-api/shared';
+import { OpenApiSpec, generateOpenApiSpec } from '@connect-ecosystem-api/yup-to-swagger';
+import {
+  validateTokenRequestSchema,
+  validateTokenResponseSchema,
+} from '@connect-ecosystem-api/api'
 import {
   loginRequestSchema,
   refreshTokenSchema,
   tokenPairResponseSchema,
-  validateTokenRequestSchema,
-  validateTokenResponseSchema,
   revokeTokenRequestSchema,
   revokeTokenResponseSchema,
 } from '../model';
@@ -22,7 +24,7 @@ export const generateFullSpec = (): OpenApiSpec => {
     RevokeTokenResponseDto: revokeTokenResponseSchema,
   };
 
-  const baseSpec = swaggerUtils.generateOpenApiSpec(
+  const baseSpec = generateOpenApiSpec(
     schemas,
     {
       title: 'Auth Service API',

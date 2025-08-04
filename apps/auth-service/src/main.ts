@@ -32,6 +32,10 @@ export const run = async () => {
   app.use(json())
   app.use(loggerMiddleware(appLogger))
 
+  app.get('/health', (_, res) => {
+    res.status(200).send(new Date().toISOString())
+  })
+
   setupSwagger(app)
 
   app.use(getAuthRoutes(authService))

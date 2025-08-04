@@ -7,6 +7,12 @@
       "path": "../../libs/shared"
     },
     {
+      "path": "../../libs/yup-to-swagger"
+    },
+    {
+      "path": "../../libs/api"
+    },
+    {
       "path": "./tsconfig.app.json"
     }
   ]

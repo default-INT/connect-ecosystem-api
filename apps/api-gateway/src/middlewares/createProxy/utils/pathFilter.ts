@@ -7,5 +7,5 @@ export const pathFilter = (paths?: string[] | null) => (pathname: string, req: R
 
   if (isBlocked) appLogger.warn(`Blocked access to internal path: ${pathname} from ${req.ip}`);
 
-  return isBlocked
+  return !isBlocked
 }

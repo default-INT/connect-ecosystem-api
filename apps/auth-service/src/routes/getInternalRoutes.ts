@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import { asyncSaveHandler } from '@connect-ecosystem-api/shared';
-import { AuthService } from '../services';
 import {
+  validateTokenRequestSchema,
   ValidateTokenRequestDto,
   ValidateTokenResponseDto,
-  validateTokenRequestSchema,
+} from '@connect-ecosystem-api/api';
+import { AuthService } from '../services';
+import {
   RevokeTokenRequestDto,
   RevokeTokenResponseDto,
   revokeTokenRequestSchema,

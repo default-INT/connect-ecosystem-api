@@ -1,4 +1,4 @@
-import { OpenApiPaths } from '@connect-ecosystem-api/shared';
+import { OpenApiPaths } from '@connect-ecosystem-api/yup-to-swagger';
 
 export const internalPaths: OpenApiPaths = {
   '/internal/validate-token': {
