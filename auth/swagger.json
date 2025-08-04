@@ -106,9 +106,7 @@
             ]
           }
         },
-        "required": [
-          "valid"
-        ]
+        "required": []
       },
       "RevokeTokenRequestDto": {
         "type": "object",
