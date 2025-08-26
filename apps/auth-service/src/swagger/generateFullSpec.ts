@@ -1,10 +1,10 @@
 import { OpenApiSpec, generateOpenApiSpec } from '@connect-ecosystem-api/yup-to-swagger';
 import {
+  loginRequestSchema,
   validateTokenRequestSchema,
   validateTokenResponseSchema,
 } from '@connect-ecosystem-api/api'
 import {
-  loginRequestSchema,
   refreshTokenSchema,
   tokenPairResponseSchema,
   revokeTokenRequestSchema,

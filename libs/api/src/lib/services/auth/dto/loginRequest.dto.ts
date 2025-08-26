@@ -1,19 +1,13 @@
-import { AuthType } from '../../entities';
-import * as Yup from 'yup'
-
-export interface LoginRequestDto {
-  authType: AuthType;
-  identifier: string;
-  password?: string | null;
-  appId: string;
-}
+import * as Yup from 'yup';
+import { AuthType } from './common';
 
 const onlyPasswordRequired = [AuthType.EmailPassword, AuthType.UsernamePassword]
 
 export const loginRequestSchema = Yup.object().shape({
   authType: Yup
-    .mixed<AuthType>()
-    .oneOf(Object.values(AuthType) as AuthType[], 'Invalid authType')
+    .mixed<NonNullable<AuthType>>()
+    .oneOf(Object.values(AuthType), 'Invalid authType')
+    .defined()
     .required('AuthType is required'),
   identifier: Yup.string()
     .when('authType', {
@@ -28,7 +22,7 @@ export const loginRequestSchema = Yup.object().shape({
         .matches(
           /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+$/,
           'Username must contain only English letters, numbers, ' +
-            'and special characters without spaces',
+          'and special characters without spaces',
         ),
     })
     .required('identifier is required'),
@@ -55,3 +49,5 @@ export const loginRequestSchema = Yup.object().shape({
     }),
   appId: Yup.string().required('appId is required'),
 })
+
+export type LoginRequestDto = Yup.Asserts<typeof loginRequestSchema>

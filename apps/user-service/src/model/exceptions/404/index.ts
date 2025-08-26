@@ -1,0 +1,1 @@
+export { NotFountProfileError } from './NotFountProfileError'

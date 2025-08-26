@@ -5,6 +5,6 @@ export interface Repository<T extends Entity> {
   findById(id: T['_id']): Promise<T | null>;
   create(entity: CreateEntity<T>): Promise<boolean>;
   update(item: UpdateEntity<T>): Promise<boolean>;
-  delete(id: T['_id']): Promise<boolean>;
+  delete(id: T['_id'], isForce?: boolean): Promise<boolean>;
   deleteMany(id: T['_id'][]): Promise<boolean>;
 }

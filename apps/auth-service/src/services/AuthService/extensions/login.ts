@@ -1,6 +1,7 @@
 import { Unauthorized401Error } from '@connect-ecosystem-api/shared';
+import { AuthType, LoginRequestDto } from '@connect-ecosystem-api/api';
+import { InvalidIdentifierError, TokenPairResponseDto } from '@auth-service/model';
 import { AuthService } from '../AuthService';
-import { AuthType, InvalidIdentifierError, LoginRequestDto, TokenPairResponseDto } from '../../../model';
 import { verifyByOauthGoogle, verifyByPassword } from '../utils';
 
 interface LoginOptions {

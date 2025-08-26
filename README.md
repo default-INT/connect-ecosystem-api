@@ -5,6 +5,7 @@
 A microservices ecosystem built with **Nx monorepo**, **TypeScript**, **Express.js**, and **MongoDB**. This project provides a scalable architecture for building interconnected services with shared libraries, automatic API documentation generation, and consistent development practices.
 
 [📚 View auth-service API in Swagger UI](https://petstore.swagger.io/?url=https://default-int.github.io/connect-ecosystem-api/auth/swagger.json)
+[📚 View user-service API in Swagger UI](https://petstore.swagger.io/?url=https://default-int.github.io/connect-ecosystem-api/user/swagger.json)
 
 ## 🚀 Features
 

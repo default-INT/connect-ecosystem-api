@@ -16,6 +16,15 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",
-    "customConditions": ["development"]
+    "customConditions": ["development"],
+    "baseUrl": ".",
+    "paths": {
+      "@api/*": ["libs/api/dist/lib/*"],
+      "@auth-service/*": ["apps/auth-service/src/*"],
+      "@gateway/*": ["apps/api-gateway/src/*"],
+      "@shared/*": ["libs/shared/dist/lib/*"],
+      "@user-service/*": ["apps/user-service/src/*"],
+      "@yup/*": ["libs/yup-to-swagger/dist/lib/*"]
+    }
   }
 }

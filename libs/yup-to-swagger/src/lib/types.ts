@@ -22,12 +22,26 @@ export interface OpenApiRequestBody {
   };
 }
 
+export interface OpenApiParameterSchemaRef {
+  $ref?: string;
+  type?: string;
+}
+
+export interface OpenApiParameter {
+  name: string;
+  in: 'path' | 'query' | 'header' | 'cookie';
+  required?: boolean;
+  description?: string;
+  schema?: OpenApiParameterSchemaRef;
+}
+
 export interface OpenApiOperation {
   summary: string;
   description: string;
   tags: string[];
   requestBody?: OpenApiRequestBody;
   responses: Record<string, OpenApiResponse>;
+  parameters?: OpenApiParameter[];
 }
 
 export interface OpenApiPathItem {
@@ -35,6 +49,7 @@ export interface OpenApiPathItem {
   get?: OpenApiOperation;
   put?: OpenApiOperation;
   delete?: OpenApiOperation;
+  patch?: OpenApiOperation;
 }
 
 export type OpenApiPaths = Record<string, OpenApiPathItem>;

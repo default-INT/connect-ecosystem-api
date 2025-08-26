@@ -1,5 +1,5 @@
 import { Entity } from '@connect-ecosystem-api/shared';
-import { AuthType } from './AuthType';
+import { AuthType } from '@connect-ecosystem-api/api';
 
 export interface Credentials extends Entity {
   userId: string;

@@ -1,69 +1,46 @@
 import {
   Collection as MongoCollection,
   Db,
-  Filter,
-  ObjectId,
-  MongoClient, ClientSession,
+  Filter, InsertOneResult,
+  MongoClient,
 } from 'mongodb';
-import { Repository } from '../../model';
-import { CreateEntity, Entity, objectIdSchema, UpdateEntity } from '../../model';
+import { DbUpdateAcknowledgedError, Repository } from '../../model';
+import { CreateEntity, Entity, UpdateEntity } from '../../model';
 import { mongodbUtils } from '../../utils';
-import { DbDeleteManyError, DbInvalidIdError, DbTransactionError } from '../../model';
+import { DbDeleteManyError } from '../../model';
+import { MongoDbSource } from './MongoDbSource';
 
-export abstract class MongoDbRepository<T extends Entity> implements Repository<T> {
+export abstract class MongoDbRepository<T extends Entity> extends MongoDbSource implements Repository<T> {
   protected source: MongoCollection<T>
-  protected client: MongoClient
   protected name: string
-  protected db: Db
 
   constructor(client: MongoClient, db: Db, name: string) {
-    this.client = client;
-    this.db = db
+    super(client, db)
     this.name = name;
     this.source = db.collection(name);
   }
 
-  protected async withTransaction<R>(transactionFn: (session: ClientSession) => Promise<R>): Promise<R> {
-    const session = this.client.startSession()
-    try {
-      session.startTransaction()
+  async createEntity(data: CreateEntity<T>): Promise<InsertOneResult<T>> {
+    const entity = mongodbUtils.prepareForInsert<T>(data);
 
-      const result = await transactionFn(session);
-
-      await session.commitTransaction();
-
-      return result;
-    } catch (error: unknown) {
-      await session.abortTransaction()
-
-      if (error instanceof Error) {
-        throw new DbTransactionError('DbTransactionError', error);
-      }
-
-      throw new DbTransactionError('DbTransactionError');
-    } finally {
-      await session.endSession();
-    }
-  }
-
-  protected static getObjectId(id: Entity['_id']): ObjectId {
-    const objId = objectIdSchema.cast(id);
-
-    if (!objId) throw new DbInvalidIdError(id)
-
-    return objId
+    return this.source.insertOne(entity);
   }
 
   async create(entity: CreateEntity<T>): Promise<boolean> {
-    const data = mongodbUtils.prepareForInsert<T>(entity);
-    const result = await this.source.insertOne(data);
+    const result = await this.createEntity(entity as T)
 
     return result.acknowledged
   }
 
-  async delete(id: T['_id']): Promise<boolean> {
+  async delete(id: T['_id'], isForce?: boolean): Promise<boolean> {
     const objId = MongoDbRepository.getObjectId(id)
     const deletedAt = new Date().toISOString();
+
+    if (isForce) {
+      const result = await this.source.deleteOne({ _id: objId } as Filter<T>);
+
+      return result.deletedCount > 0
+    }
 
     const result = await this.source.updateOne({ _id: objId } as Filter<T>, {
       isDeleted: true,
@@ -107,8 +84,10 @@ export abstract class MongoDbRepository<T extends Entity> implements Repository<
 
   async update(item: UpdateEntity<T>): Promise<boolean> {
     const { _id, ...data } = mongodbUtils.prepareToUpdate(item);
-    const result = await this.source.updateOne({ _id: _id } as Filter<T>, data)
+    const result = await this.source.updateOne({ _id } as Filter<T>, { $set: data as never })
 
-    return result.acknowledged
+    if (!result.acknowledged) throw new DbUpdateAcknowledgedError()
+
+    return result.modifiedCount > 0
   }
 }

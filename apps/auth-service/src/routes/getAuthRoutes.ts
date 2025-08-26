@@ -1,9 +1,8 @@
 import { Router } from 'express';
 import { asyncSaveHandler, Unauthorized401Error } from '@connect-ecosystem-api/shared';
+import { loginRequestSchema, LoginRequestDto } from '@connect-ecosystem-api/api';
 import { AuthService } from '../services';
 import {
-  LoginRequestDto,
-  loginRequestSchema,
   refreshTokenSchema,
   TokenPairResponseDto,
   RefreshTokenDto,

@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "nx serve api-gateway",
     "serve:prod": "nx serve api-gateway --configuration=production",
-    "serve:all": " nx run-many --target=serve --projects=api-gateway,auth-service --parallel",
+    "serve:all": "nx run-many --target=serve --projects=api-gateway,auth-service,user-service --parallel",
     "serve:auth:dev": "nx serve auth-service --configuration=development",
     "serve:auth:prod": "nx serve auth-service --configuration=production",
     "lint:auth": "nx lint auth-service",

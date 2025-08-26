@@ -14,7 +14,7 @@ export const authMiddleware = (config: AuthConfig) => {
   const { authServerUrl, excludePaths, includePaths } = config
 
   return asyncSaveHandler(async (req: Request, _: Response, next: NextFunction) => {
-    if (!includePaths?.some(path => req.path.startsWith(path))) return next()
+    if (includePaths?.length && !includePaths?.some(path => req.path.startsWith(path))) return next()
     if (excludePaths?.some(path => req.path.startsWith(path))) return next()
 
     const accessToken = getAccessToken(req)

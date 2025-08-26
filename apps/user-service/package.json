@@ -1,5 +1,11 @@
 {
   "name": "@connect-ecosystem-api/user-service",
   "version": "0.0.1",
-  "private": true
+  "private": true,
+  "scripts": {
+    "generate:swagger": "ts-node bin/generate-swagger.ts"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2"
+  }
 }

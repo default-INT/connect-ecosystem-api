@@ -31,17 +31,24 @@ jobs:
         run: |
           npx nx build auth-service
 
+      - name: Build user-service
+        run: |
+          npx nx build user-service
+
       - name: Build Swagger
         run: |
           npm run generate:swagger --workspace=apps/auth-service
+          npm run generate:swagger --workspace=apps/user-service
 
       - name: Create dist directory structure
         run: |
           mkdir -p .dist/auth
+          mkdir -p .dist/user
 
       - name: Copy swagger.json to dist
         run: |
           cp apps/auth-service/dist/swagger.json .dist/auth/swagger.json
+          cp apps/user-service/dist/swagger.json .dist/user/swagger.json
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
