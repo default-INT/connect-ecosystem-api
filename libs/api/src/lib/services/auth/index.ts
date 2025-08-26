@@ -1,5 +1,5 @@
 import { internal } from './internal';
 
-export const auth = {
+export const authService = {
   internal,
 }

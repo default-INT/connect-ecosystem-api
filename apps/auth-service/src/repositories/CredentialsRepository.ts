@@ -1,6 +1,7 @@
 import { Db, MongoClient } from 'mongodb';
 import { CreateEntity, MongoDbRepository } from '@connect-ecosystem-api/shared';
-import { AuthType, Credentials } from '../model';
+import { AuthType } from '@connect-ecosystem-api/api';
+import { Credentials } from '../model';
 import { env } from '../config/env';
 
 export class CredentialsRepository extends MongoDbRepository<Credentials> {

@@ -1,7 +1,8 @@
-import { auth } from './services';
+import { authService, userService } from './services';
 
 export const api = {
-  auth,
+  authService,
+  userService,
 }
 
 export * from './services/index.dto'

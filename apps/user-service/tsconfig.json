@@ -4,7 +4,13 @@
   "include": [],
   "references": [
     {
+      "path": "../../libs/api"
+    },
+    {
       "path": "../../libs/shared"
+    },
+    {
+      "path": "../../libs/yup-to-swagger"
     },
     {
       "path": "./tsconfig.app.json"

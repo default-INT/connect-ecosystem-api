@@ -1,7 +1,8 @@
-import { Unauthorized401Error } from '@connect-ecosystem-api/shared';
-import crypto from 'node:crypto';
+import { appLogger, Unauthorized401Error } from '@connect-ecosystem-api/shared';
+import { AuthType, LoginRequestDto } from '@connect-ecosystem-api/api';
+import { api } from '@connect-ecosystem-api/api';
 import bcrypt from 'bcrypt';
-import { AuthType, LoginRequestDto, TokenPairResponseDto, UserAlreadyExistsError } from '../../../model';
+import { TokenPairResponseDto, UserAlreadyExistsError } from '../../../model';
 import { AuthService } from '../AuthService';
 import { env } from '../../../config/env';
 
@@ -22,23 +23,15 @@ AuthService.prototype.register = async function(data) {
     throw new Unauthorized401Error(`Password is required for this auth type - ${authType}`);
   }
 
-  // TODO: temporary
-  const userId = crypto.randomUUID();
   const passwordHash = password ? await bcrypt.hash(password, env.saltRounds) : null;
-  // TODO: create user in user-service
-  // const userCreated = await userServiceClient.createUser({
-  //   userId,
-  //   authType,
-  //   identifier,
-  //   appId,
-  //   createdAt: new Date().toISOString()
-  // });
-  // if (!userCreated) {
-  //   throw new Unauthorized401Error('Failed to create user');
-  // }
-  const userCreated = true; // MOCK: create user in user-service
 
-  if (!userCreated) throw new Unauthorized401Error('Failed to create user');
+  const userId = await api.userService.internal.user.create({
+    authType,
+    identifier,
+    appId,
+  });
+
+  if (!userId) throw new Unauthorized401Error('Failed to create user');
 
   const credentialsCreated = await this.credentialsRepository.create({
     userId,
@@ -48,8 +41,8 @@ AuthService.prototype.register = async function(data) {
   });
 
   if (!credentialsCreated) {
-    // TODO: rollback user in user-service
-    // await userServiceClient.deleteUser(userId);
+    const result = await api.userService.internal.user.delete(userId);
+    if (!result) appLogger.error('Failed to delete user', { userId });
     throw new Unauthorized401Error('Failed to create credentials');
   }
 

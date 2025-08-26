@@ -13,7 +13,7 @@ export const validateToken = async (accessToken: string, authServiceUrl: string)
   const timeoutId = setTimeout(() => abortController.abort(), AUTH_ABORT_TIMEOUT);
 
   try {
-    const { valid, payload } = await api.auth.internal.validateToken({ accessToken })
+    const { valid, payload } = await api.authService.internal.validateToken({ accessToken })
 
     clearTimeout(timeoutId);
 

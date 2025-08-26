@@ -16,12 +16,17 @@ export const getApiServiceRoutes = () => {
       { blockedPaths: ['/internal'] },
     ),
   );
+
   router.use('/user',
     authMiddleware({
       authServerUrl: env.serviceUrls.auth,
       excludePaths: ['/public/health'],
     }),
-    createProxy('user-service', env.serviceUrls.user),
+    createProxy(
+      'user-service',
+      env.serviceUrls.user,
+      { blockedPaths: ['/internal'] },
+    ),
   );
 
   return router

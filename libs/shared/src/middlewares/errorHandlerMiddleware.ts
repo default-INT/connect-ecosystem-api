@@ -1,3 +1,4 @@
+import { AxiosError, isAxiosError } from 'axios';
 import { Express, NextFunction, Request, Response } from 'express';
 import { ValidationError } from 'yup';
 import { BadRequest400Error, BaseError } from '../model';
@@ -12,7 +13,8 @@ const toDisplayError = (err: Error) => {
   const isBaseError = err instanceof BaseError
 
   return {
-    ...err,
+    success: false,
+    name: err.name,
     message: err.message,
     stack: isProduction ? undefined : err.stack,
     originalError: (!isProduction && isBaseError) ? err.originalError : undefined,
@@ -38,7 +40,35 @@ export const errorHandlerMiddleware = (err: Error, _: Request, res: Response, __
     return;
   }
 
-  res.status(SERVER_ERROR_STATUS).send(toDisplayError(err))
+  if (isAxiosError(err)) {
+    const axiosError = err as AxiosError<BaseHttpError>;
+    const status = axiosError.response?.status || SERVER_ERROR_STATUS;
+    const message = axiosError.response?.data?.message || axiosError.message;
+    const stack = axiosError.response?.data?.stack;
+    const name = axiosError.response?.data?.name;
+    const originalError = axiosError.response?.data?.originalError;
+    const stackMessage = axiosError.response?.data?.stackMessage;
+
+    const axios = {
+      isAxiosError: true,
+      message,
+      stack,
+      name,
+      originalError,
+      stackMessage,
+      code: axiosError.code,
+      status,
+      statusText: axiosError.response?.statusText,
+      method: axiosError.config?.method,
+      url: axiosError.config?.url,
+    }
+
+    res.status(status).json({ success: false, ...axios })
+
+    return;
+  }
+
+  res.status(SERVER_ERROR_STATUS).json(toDisplayError(err))
 }
 
 export const errorHandlerWrapper = (app: Express) => {

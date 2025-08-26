@@ -17,7 +17,7 @@ const host = env.host;
 const port = env.port;
 const app = express();
 
-export const run = async () => {
+const run = async () => {
   const { client, db } = await initDb()
   const credentialRepo = new CredentialsRepository(client, db)
   const refreshTokenRepo = new RefreshTokenRepository(client, db)
